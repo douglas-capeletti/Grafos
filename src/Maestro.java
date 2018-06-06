@@ -1,5 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,12 +19,12 @@ public class Maestro {
         System.out.println("Tempo de Execucação ( " + (System.currentTimeMillis() - inicial) + " milissegundos )");
     }
 
-    double calculadora(LinkedHashMap<String, Nodo> dados){
-        double resultado = 0;
+    BigDecimal calculadora(LinkedHashMap<String, Nodo> dados){
+        BigDecimal resultado = new BigDecimal(BigInteger.ZERO);
         for(Nodo g: dados.values()) {
-            double pesoNodo = g.getPesoAcumulado();
+            BigDecimal pesoNodo = g.getPesoAcumulado();
             System.out.println(g.toString() + " -> " + pesoNodo);
-            if(pesoNodo>resultado)
+            if(pesoNodo.compareTo(resultado) > 0)
                 resultado = pesoNodo;
         }
         return resultado;

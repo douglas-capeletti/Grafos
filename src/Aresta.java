@@ -1,5 +1,7 @@
+import java.math.BigDecimal;
+
 public class Aresta {
-    private double pesoTotal;
+    private BigDecimal pesoTotal;
     private int pesoAresta;
     private Nodo nodo;
 
@@ -8,11 +10,11 @@ public class Aresta {
         this.nodo = nodo;
     }
 
-    public double getPesoTotal() {
-        return this.pesoTotal = pesoAresta * nodo.getPesoAcumulado();
+    public BigDecimal getPesoTotal() {
+        return this.pesoTotal = nodo.getPesoAcumulado().multiply(new BigDecimal(pesoAresta));
     }
 
-    public void setPesoTotal(double pesoTotal) {
+    public void setPesoTotal(BigDecimal pesoTotal) {
         this.pesoTotal = pesoTotal;
     }
 

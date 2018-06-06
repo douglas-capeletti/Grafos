@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 
 public class Nodo {
@@ -7,13 +8,13 @@ public class Nodo {
     private LinkedHashMap<String, Aresta> filhos = new LinkedHashMap<>();
 
     // dinamicas
-    private double pesoAcumulado;
+    private BigDecimal pesoAcumulado;
     private boolean visitado = false;
 
     public Nodo(String nome, int peso) {
         this.nome = nome;
         this.peso = peso;
-        this.pesoAcumulado = peso;
+        this.pesoAcumulado = new BigDecimal(peso);
     }
 
     public String getNome() {
@@ -48,11 +49,11 @@ public class Nodo {
         this.filhos = filhos;
     }
 
-    public double getPesoAcumulado() {
+    public BigDecimal getPesoAcumulado() {
         if(!visitado) {
             if (temFilhos()) {
                 for (Aresta a : filhos.values()) {
-                    pesoAcumulado += a.getPesoTotal();
+                    pesoAcumulado = pesoAcumulado.add(a.getPesoTotal());
                 }
             }
             setVisitado();
@@ -60,7 +61,7 @@ public class Nodo {
         return pesoAcumulado; // se for folha retorna o valor dele
     }
 
-    public void setPesoAcumulado(double pesoAcumulado) {
+    public void setPesoAcumulado(BigDecimal pesoAcumulado) {
         this.pesoAcumulado = pesoAcumulado;
     }
 

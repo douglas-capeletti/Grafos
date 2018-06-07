@@ -36,25 +36,30 @@ public class Maestro {
     }
 
     LinkedHashMap<String, Nodo> leitura(String caminhoArquivo){
-        LinkedHashMap<String, Nodo> grafos = new LinkedHashMap<>();
+        LinkedHashMap<String, Nodo> grafo = new LinkedHashMap<>();
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(caminhoArquivo), Charset.forName("utf8"))) {
             String[] conteudo;
             int index = Integer.parseInt(reader.readLine());
+
+            // Leitura dos nodos
             for(int i = 0; i< index; i++) {
                 conteudo = reader.readLine().split(" ");
-                grafos.put(conteudo[0] ,new Nodo(conteudo[0], Integer.parseInt(conteudo[1])));
+                grafo.put(conteudo[0] ,new Nodo(conteudo[0], Integer.parseInt(conteudo[1])));
             }
+
             index = Integer.parseInt(reader.readLine());
+
+            // Leitura das arestas
             for(int i = 0; i< index; i++) {
                 conteudo = reader.readLine().split(" ");
-                if(grafos.containsKey(conteudo[0]) && grafos.containsKey(conteudo[1])){
-                    grafos.get(conteudo[0]).addFilho(new Aresta(Integer.parseInt(conteudo[2]), grafos.get(conteudo[1])));
+                if(grafo.containsKey(conteudo[0]) && grafo.containsKey(conteudo[1])){
+                    grafo.get(conteudo[0]).addFilho(new Aresta(Integer.parseInt(conteudo[2]), grafo.get(conteudo[1])));
                 }
             }
-            return grafos;
+            return grafo;
         }
         catch (IOException x) {
-            x.printStackTrace();
+            System.err.println("Arquivo para leitura de dados não encontrado");
         }
         return null;
     }

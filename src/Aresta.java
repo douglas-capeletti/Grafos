@@ -1,21 +1,14 @@
 import java.math.BigDecimal;
 
 public class Aresta {
-    private BigDecimal pesoTotal;
     private int pesoAresta;
     private Nodo nodo;
+
+    private BigDecimal pesoTotal;
 
     public Aresta(int pesoAresta, Nodo nodo) {
         this.pesoAresta = pesoAresta;
         this.nodo = nodo;
-    }
-
-    public BigDecimal getPesoTotal() {
-        return this.pesoTotal = nodo.getPesoAcumulado().multiply(new BigDecimal(pesoAresta));
-    }
-
-    public void setPesoTotal(BigDecimal pesoTotal) {
-        this.pesoTotal = pesoTotal;
     }
 
     public int getPesoAresta() {
@@ -32,6 +25,14 @@ public class Aresta {
 
     public void setNodo(Nodo nodo) {
         this.nodo = nodo;
+    }
+
+    public BigDecimal getPesoTotal() {
+        return this.pesoTotal = nodo.getPesoAcumulado().multiply(new BigDecimal(pesoAresta));
+    }
+
+    public void setPesoTotal(BigDecimal pesoTotal) {
+        this.pesoTotal = pesoTotal;
     }
 
     @Override

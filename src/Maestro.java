@@ -9,17 +9,22 @@ import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class Maestro {
-    private String caminho = "src\\casosTeste\\";
 
     void start(){
-        exibeEscolha();
+        String caminho = exibeEscolha();
+        if(caminho == null){
+            Scanner in = new Scanner(System.in);
+            System.out.println("Insira o caminho completo do arquivo:");
+            caminho = in.next();
+        }
         System.out.println();
         Long inicial = System.currentTimeMillis();
-        System.out.println("\nRESULTADO FINAL: " + calculadora(leitura()));
+        System.out.println("\nRESULTADO FINAL: " + calculadoraGrafo(leitura(caminho)));
         System.out.println("Tempo de Execucação ( " + (System.currentTimeMillis() - inicial) + " milissegundos )");
+
     }
 
-    BigDecimal calculadora(LinkedHashMap<String, Nodo> dados){
+    BigDecimal calculadoraGrafo(LinkedHashMap<String, Nodo> dados){
         BigDecimal resultado = new BigDecimal(BigInteger.ZERO);
         for(Nodo g: dados.values()) {
             BigDecimal pesoNodo = g.getPesoAcumulado();
@@ -30,9 +35,9 @@ public class Maestro {
         return resultado;
     }
 
-    LinkedHashMap<String, Nodo> leitura(){
+    LinkedHashMap<String, Nodo> leitura(String caminhoArquivo){
         LinkedHashMap<String, Nodo> grafos = new LinkedHashMap<>();
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get(this.caminho), Charset.forName("utf8"))) {
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(caminhoArquivo), Charset.forName("utf8"))) {
             String[] conteudo;
             int index = Integer.parseInt(reader.readLine());
             for(int i = 0; i< index; i++) {
@@ -64,36 +69,37 @@ public class Maestro {
         }
     }
 
-    void exibeEscolha(){
+    String exibeEscolha(){
+        String caminho = null;
         Scanner in = new Scanner(System.in);
-        System.out.println("Escolha o arquivo a ser processado:" +
-                "\n(0)  Exemplo" +
-                "\n(1)  Caso0100" +
-                "\n(2)  Caso0200" +
-                "\n(4)  Caso0400" +
-                "\n(6)  Caso0600" +
-                "\n(8)  Caso0800" +
-                "\n(10) Caso1000" +
-                "\nEscolha :  "
+        System.out.print(
+            "\nEscolha o arquivo a ser processado:" +
+            "\n(0)  Exemplo" +
+            "\n(1)  Caso0100" +
+            "\n(2)  Caso0200" +
+            "\n(4)  Caso0400" +
+            "\n(6)  Caso0600" +
+            "\n(8)  Caso0800" +
+            "\n(10) Caso1000" +
+            "\nDigite outro para inserir caminho manualmente:  "
         );
         int opcao = in.nextInt();
         switch (opcao){
-            case 0:caminho += "exemplo";
+            case 0: caminho = "src\\casosTeste\\exemplo";
                 break;
-            case 1:caminho += "caso0100";
+            case 1: caminho = "src\\casosTeste\\caso0100";
                 break;
-            case 2:caminho += "caso0200";
+            case 2: caminho = "src\\casosTeste\\caso0200";
                 break;
-            case 4:caminho += "caso0400";
+            case 4: caminho = "src\\casosTeste\\caso0400";
                 break;
-            case 6:caminho += "caso0600";
+            case 6: caminho = "src\\casosTeste\\caso0600";
                 break;
-            case 8:caminho += "caso0800";
+            case 8: caminho = "src\\casosTeste\\caso0800";
                 break;
-            case 10:caminho += "caso1000";
+            case 10: caminho = "src\\casosTeste\\caso1000";
                 break;
-            default: caminho += "exemplo";
         }
-        // listaValores(leitura()); // exibicao da lista de dependencias na tela
+        return caminho;
     }
 }
